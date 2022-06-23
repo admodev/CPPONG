@@ -7,6 +7,7 @@ const int rectangleHeight = 100;
 const Color screenBackgroundColor = BLACK;
 const Color entityColor = WHITE;
 const char* winnerText = nullptr;
+const char* textHint = nullptr;
 
 struct Ball
 {
@@ -134,6 +135,20 @@ int main(void)
 			winnerText = "Left player wins!";
 		}
 
+		if (winnerText)
+		{
+			textHint = "Hint: Press SPACEBAR to play again.";
+		}
+
+		if (winnerText && IsKeyPressed(KEY_SPACE))
+		{
+			ball.x = GetScreenWidth() / 2;
+			ball.y = GetScreenHeight() / 2;
+			ball.speedX = 300;
+			ball.speedY = 300;
+			winnerText = nullptr;
+		}
+
 		BeginDrawing();
 			ClearBackground(screenBackgroundColor);
 			ball.Draw();
@@ -144,6 +159,9 @@ int main(void)
 			{
 				int textWidth = MeasureText(winnerText, 60);
 				DrawText(winnerText, GetScreenWidth() / 2 - textWidth / 2, GetScreenHeight() / 2 - 30, 60, PURPLE);
+				
+				int textHintWidth = MeasureText(textHint, 18);
+				DrawText(textHint, GetScreenWidth() / 2 - (-10) - textHintWidth / 2, GetScreenHeight() / 2 - (-40), 18, WHITE);
 			}
 
 			DrawFPS(10, 10);
