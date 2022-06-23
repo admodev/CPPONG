@@ -2,6 +2,8 @@
 
 const int screenWidth = 800;
 const int screenHeight = 450;
+const int rectangleWidth = 10;
+const int rectangleHeight = 100;
 const Color screenBackgroundColor = BLACK;
 const Color entityColor = WHITE;
 
@@ -23,9 +25,14 @@ struct Paddle
 	float speed;
 	float width, height;
 
+	Rectangle GetRect()
+	{
+		return Rectangle{ x - width / 2, y - height / 2, rectangleWidth, rectangleHeight };
+	}
+
 	void Draw()
 	{
-		DrawRectangle((int) x -  width / 2, (int) y - height / 2, width, height, entityColor);
+		DrawRectangleRec(GetRect(), entityColor);
 	}
 };
 
@@ -91,6 +98,17 @@ int main(void)
 		if (IsKeyDown(KEY_DOWN))
 		{
 			rightPaddle.y += rightPaddle.speed * GetFrameTime();
+		}
+
+		// Check collisions and bounce the ball in the oposite direction
+		if (CheckCollisionCircleRec(Vector2{ ball.x, ball.y }, ball.radius, leftPaddle.GetRect()))
+		{
+			ball.speedX *= -1;
+		}
+
+		if (CheckCollisionCircleRec(Vector2{ ball.x, ball.y }, ball.radius, rightPaddle.GetRect()))
+		{
+			ball.speedX *= -1;
 		}
 
 		BeginDrawing();
