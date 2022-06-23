@@ -6,6 +6,7 @@ const int rectangleWidth = 10;
 const int rectangleHeight = 100;
 const Color screenBackgroundColor = BLACK;
 const Color entityColor = WHITE;
+const char* winnerText = nullptr;
 
 struct Ball
 {
@@ -123,11 +124,28 @@ int main(void)
 			}
 		}
 
+		if (ball.x < 0)
+		{
+			winnerText = "Right player wins!";
+		}
+
+		if (ball.x > GetScreenWidth())
+		{
+			winnerText = "Left player wins!";
+		}
+
 		BeginDrawing();
 			ClearBackground(screenBackgroundColor);
 			ball.Draw();
 			leftPaddle.Draw();
 			rightPaddle.Draw();
+
+			if (winnerText)
+			{
+				int textWidth = MeasureText(winnerText, 60);
+				DrawText(winnerText, GetScreenWidth() / 2 - textWidth / 2, GetScreenHeight() / 2 - 30, 60, PURPLE);
+			}
+
 			DrawFPS(10, 10);
 		EndDrawing();
 	}
