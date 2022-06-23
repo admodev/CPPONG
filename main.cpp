@@ -74,12 +74,14 @@ int main(void)
 			ball.speedY *= -1;
 		}
 
+		// Check if ball is offset of the screen height and bounce it in the oposite direction
 		if (ball.y > GetScreenHeight())
 		{
 			ball.y = GetScreenHeight();
 			ball.speedY *= -1;
 		}
 
+		// Capture IO and move the paddles
 		if (IsKeyDown(KEY_W))
 		{
 			leftPaddle.y -= leftPaddle.speed * GetFrameTime();
@@ -103,12 +105,20 @@ int main(void)
 		// Check collisions and bounce the ball in the oposite direction
 		if (CheckCollisionCircleRec(Vector2{ ball.x, ball.y }, ball.radius, leftPaddle.GetRect()))
 		{
-			ball.speedX *= -1;
+			// If ball speed is going in negative, reverse it
+			if (ball.speedX < 0)
+			{
+				ball.speedX *= -1;
+			}
 		}
 
 		if (CheckCollisionCircleRec(Vector2{ ball.x, ball.y }, ball.radius, rightPaddle.GetRect()))
 		{
-			ball.speedX *= -1;
+			// Same we did before in the other if statement, but in the oposite direction
+			if (ball.speedX > 0)
+			{
+				ball.speedX *= -1;
+			}
 		}
 
 		BeginDrawing();
