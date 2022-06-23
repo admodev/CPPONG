@@ -73,6 +73,26 @@ int main(void)
 			ball.speedY *= -1;
 		}
 
+		if (IsKeyDown(KEY_W))
+		{
+			leftPaddle.y -= leftPaddle.speed * GetFrameTime();
+		}
+
+		if (IsKeyDown(KEY_S))
+		{
+			leftPaddle.y += leftPaddle.speed * GetFrameTime();
+		}
+
+		if (IsKeyDown(KEY_UP))
+		{
+			rightPaddle.y -= rightPaddle.speed * GetFrameTime();
+		}
+
+		if (IsKeyDown(KEY_DOWN))
+		{
+			rightPaddle.y += rightPaddle.speed * GetFrameTime();
+		}
+
 		BeginDrawing();
 			ClearBackground(screenBackgroundColor);
 			ball.Draw();
