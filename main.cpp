@@ -46,7 +46,7 @@ int main(void)
 	ball.x = GetScreenWidth() / 2.0f;
 	ball.y = GetScreenHeight() / 2.0f;
 	ball.radius= 5;
-	ball.speedX = 100;
+	ball.speedX = 300;
 	ball.speedY = 300;
 
 	Paddle leftPaddle;
@@ -108,7 +108,8 @@ int main(void)
 			// If ball speed is going in negative, reverse it
 			if (ball.speedX < 0)
 			{
-				ball.speedX *= -1;
+				ball.speedX *= -1.1f;
+				ball.speedY = (ball.y - leftPaddle.y) / (leftPaddle.height / 2) * ball.speedX;
 			}
 		}
 
@@ -117,7 +118,8 @@ int main(void)
 			// Same we did before in the other if statement, but in the oposite direction
 			if (ball.speedX > 0)
 			{
-				ball.speedX *= -1;
+				ball.speedX *= -1.1f;
+				ball.speedY = (ball.y - rightPaddle.y) / (rightPaddle.height / 2) * - ball.speedX;
 			}
 		}
 
